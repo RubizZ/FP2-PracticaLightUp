@@ -1,5 +1,4 @@
 #pragma once
-#define COLORES_H
 
 //===Color===//
 #define BLUE    "\x1b[34m"
