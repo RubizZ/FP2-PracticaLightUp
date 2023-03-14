@@ -1,5 +1,5 @@
 #pragma once
-#define CELDA_H
+#include"colores.h"
 using namespace std;
 
 typedef enum tTipo { PARED, BOMBILLA, LIBRE };
@@ -18,6 +18,5 @@ bool esBombilla(const tCelda& c);
 bool estaApagada(const tCelda& c);
 bool estaIluminada(const tCelda& c);
 void apagaCelda(tCelda& c);
-void actualizaIluminaciónCelda(tCelda& c, bool iluminar);
+void actualizaIluminaciÃ³nCelda(tCelda& c, bool iluminar);
 void ponBombilla(tCelda& c);
-
