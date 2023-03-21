@@ -17,4 +17,4 @@ tCelda celdaEnPos(const tTablero& tab, int x, int y);
 void ponCeldaEnPos(tTablero& tab, int x, int y, const tCelda& c);
 bool leerTablero(ifstream& archivo, tTablero& tab);
 void mostrarTablero(const tTablero& tab);
-void charAInt(char c);
+int charAInt(char c);
