@@ -1,6 +1,5 @@
 //#include <iostream>
-#include <fstream> 
-#include <iomanip>
+
 #include "tablero.h"
 
 
@@ -25,9 +24,9 @@ int charAInt(char c){
 	else if (c == '4') n = 4;
 	return n;
 }
-bool leerTablero(ifstream& archivo, tTablero& tab){
+bool leerTablero(ifstream& archivo, tTablero& tab, const string nombre){
 	bool condicion = false;
-	archivo.open("tablero.txt");
+	archivo.open(nombre);
 	if (archivo.is_open()) {
 		condicion = true;
 		archivo >> tab.nFils;
@@ -50,6 +49,7 @@ bool leerTablero(ifstream& archivo, tTablero& tab){
 				}
 			}
 		}
+		archivo.close();
 	}
 	return condicion;
 	
@@ -79,13 +79,4 @@ void mostrarTablero(const tTablero& tab){
 		}
 		cout << endl << "---+---+---+---+---+---+" << endl;
 	}
-}
-int main() {
-	tTablero tablero;
-	ifstream archivo;
-	
-	if (leerTablero(archivo, tablero)) {
-		mostrarTablero(tablero);
-	}
-	else cout << "Ha habido un error";
 }
