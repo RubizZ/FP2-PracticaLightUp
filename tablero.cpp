@@ -62,21 +62,32 @@ void mostrarTablero(const tTablero& tab){
 		cout << BLUE << " " << i << " " << RESET << "|";
 	}
 	cout << endl;
-	cout << "---+---+---+---+---+---+" << endl;
+	
 	for (int i = 0; i < tab.nFils; i++) { 
-		
+		for (int j = 0; j <= tab.nCols; j++) cout << "---+";
+		cout << endl;
 		cout << BLUE << " " << i << " " << RESET << "|";
 		for(int j = 0; j < tab.nCols; j++){
 			
-			if (estaIluminada(tab.tablero[i][j])) {
-				if (esBombilla(tab.tablero[i][j])) cout << BG_YELLOW << ORANGE << " * " << RESET;
-				else cout << setw(3) << BG_YELLOW << "   " << RESET;
-			}
+			if (estaIluminada(tab.tablero[i][j])) cout << setw(3) << BG_YELLOW << "   " << RESET;
+			else if (esBombilla(tab.tablero[i][j])) cout << BG_YELLOW << ORANGE << " * " << RESET;
 			else if (estaApagada(tab.tablero[i][j])) cout << BG_WHITE << "   " << RESET;
 			else if (esParedRestringida(tab.tablero[i][j])) cout << BG_BLACK << WHITE << " " << numParedRestringida(tab.tablero[i][j]) << " " << RESET;
 			else if (esPared(tab.tablero[i][j])) cout << BG_BLACK<< "   " << RESET;
 			cout << "|";
 		}
-		cout << endl << "---+---+---+---+---+---+" << endl;
+		cout << endl;
 	}
+	for (int j = 0; j <= tab.nCols; j++) cout << "---+";
+	cout << endl;
+}
+
+bool comprobarParedRestringida(const tTablero tab, const int x, const int y) {
+	int num = 0;
+	if (esBombilla(tab.tablero[x][y - 1])) num++;
+	if (esBombilla(tab.tablero[x + 1][y])) num++;
+	if (esBombilla(tab.tablero[x][y + 1])) num++;
+	if (esBombilla(tab.tablero[x - 1][y])) num++;
+
+	return tab.tablero[x][y].numBombillas == num;
 }

@@ -1,6 +1,6 @@
 //(-1,0) para salir y (-1, -1) para resetear
 #include <iostream>
-#include"celda.h"
+#include "celda.h"
 
 
 char celdaToChar(const tCelda& cel){
@@ -48,37 +48,22 @@ tCelda charToCelda(char c) {
 	return cel;
 }
 bool esPared(const tCelda& c){
-	bool condicion;
-	if (c.tipo == PARED) condicion = true;
-	else condicion = false;
-	return condicion;
+	return c.tipo == PARED;
 }
 bool esParedRestringida(const tCelda& c){
-	bool condicion;	
-	if (esPared(c) && c.numBombillas != -1) condicion = true;
-	else condicion = false; 
-	return condicion;
+	return esPared(c) && c.numBombillas != -1;
 }
 int numParedRestringida(const tCelda& c){
 	return c.numBombillas;
 }
 bool esBombilla(const tCelda& c){
-	bool condicion;
-	if (c.tipo == BOMBILLA) condicion = true;
-	else condicion = false;
-	return condicion;
+	return c.tipo == BOMBILLA;
 }
 bool estaApagada(const tCelda& c){
-	bool condicion;
-	if (c.tipo == LIBRE && c.numBombillas == 0) condicion = true;
-	else condicion = false;
-	return condicion;
+	return c.tipo == LIBRE && c.numBombillas == 0;
 }
 bool estaIluminada(const tCelda& c) {
-	bool condicion;
-	if (c.tipo == LIBRE && c.numBombillas > 0) condicion = true;
-	else condicion = false;
-	return condicion;
+	return c.tipo == LIBRE && c.numBombillas > 0;
 }
 void apagaCelda(tCelda& c) {
 	c.tipo = LIBRE;
@@ -86,12 +71,8 @@ void apagaCelda(tCelda& c) {
 }
 void actualizaIluminacionCelda(tCelda& c, bool iluminar) {
 	if (iluminar) c.numBombillas++;
-	else {
-		c.tipo = LIBRE;
-		c.numBombillas--;
-	}
+	else c.numBombillas--;
 }
 void ponBombilla(tCelda& c) {
 	c.tipo = BOMBILLA;
-	c.numBombillas++;
 }

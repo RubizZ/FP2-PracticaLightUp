@@ -17,7 +17,7 @@ int main() {
 	}
 
 	int x = 0, y = 0;
-	while (!esPosQuit(x, y) && !estaTerminado(tablero)) {
+	do {
 		mostrarTablero(tablero);
 		cout << "En que posicion quieres poner o quitar una bombilla? -1 0 para salir, -1 -1 para resetear\n\n-> ";
 		cin >> x;
@@ -27,8 +27,9 @@ int main() {
 			ejecutarPos(tablero, x, y);
 			if (estaTerminado(tablero)) {
 				mostrarTablero(tablero);
-				cout << "Has terminado el juego!";
+				cout << "Has terminado el juego!\n";
 			}
 		}
-	}
+	} while (!esPosQuit(x, y) && !estaTerminado(tablero));
+	return 33;
 }

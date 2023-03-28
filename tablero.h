@@ -20,3 +20,4 @@ void ponCeldaEnPos(tTablero& tab, int x, int y, const tCelda& c);
 bool leerTablero(ifstream& archivo, tTablero& tab, const string nombre);
 void mostrarTablero(const tTablero& tab);
 int charAInt(char c);
+bool comprobarParedRestringida(const tTablero tab, const int x, const int y);
