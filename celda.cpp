@@ -4,7 +4,7 @@
 
 
 char celdaToChar(const tCelda& cel){
-	char tipo;
+	char tipo = ' ';	//Si no es nada de los if, sera una celda vacia (un espacio)
 	if (cel.tipo == BOMBILLA) {
 		tipo = '*';
 	}
@@ -27,26 +27,42 @@ char celdaToChar(const tCelda& cel){
 			break;
 		}
 	}
-	else tipo = ' ';
+	//else tipo = ' ';
 	return tipo;
 }
 
 tCelda charToCelda(char c) {
-	tCelda cel;
+	tCelda cel = {LIBRE, 0};	//Si no es nada de los if, sera un . (LIBRE y 0)
 	if (c == 'X') {
 		cel.tipo = PARED;
-	}
-	else if (c == -1 && 0 && 2 && 3 && 4) {
-		cel.numBombillas = c;
-	}
-	else if (c == '.') {
-		cel.tipo = LIBRE;
+		cel.numBombillas = -1;
 	}
 	else if (c == '*') {
 		cel.tipo = BOMBILLA;
+		cel.numBombillas = 0;
 	}
+	else if (c == 0 || 1 || 2 || 3 || 4) {
+		cel.tipo = PARED;
+		cel.numBombillas = charAInt(c);
+	}
+	/*
+	else if (c == '.') {
+		cel.tipo = LIBRE;
+		cel.numBombillas = 0;
+	}
+	*/
 	return cel;
 }
+int charAInt(char c) {
+	int n = 4;
+	if (c == '0') n = 0;
+	else if (c == '1') n = 1;
+	else if (c == '2') n = 2;
+	else if (c == '3') n = 3;
+	//else if (c == '4') n = 4;
+	return n;
+}
+
 bool esPared(const tCelda& c){
 	return c.tipo == PARED;
 }

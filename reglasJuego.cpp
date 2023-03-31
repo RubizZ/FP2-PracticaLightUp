@@ -24,79 +24,28 @@ bool esPosReset(int x, int y) {
 	return (x == -1 && y == -1);
 }
 
-void iluminarAlrededor(tTablero& tab, int x, int y, bool iluminar) {
-	tCelda c;
-	tDir dir = NORTE;
-
-	int i = 0;
-	while (dir != NADA) {
-		i++;
-		if (dir == NORTE) {
-			if (y - i < 0 || esPared(celdaEnPos(tab, x, y - i))) {
-				dir = ESTE;
-				i = 0;
-			}
-			else {
-				c = celdaEnPos(tab, x, y - i);
-				actualizaIluminacionCelda(c, iluminar);
-				ponCeldaEnPos(tab, x, y - i, c);
-			}
-		}
-		else if (dir == ESTE) {
-			if (x + i > tab.nCols || esPared(celdaEnPos(tab, x + i, y))) {
-				dir = SUR;
-				i = 0;
-			}
-			else {
-				c = celdaEnPos(tab, x + i, y);
-				actualizaIluminacionCelda(c, iluminar);
-				ponCeldaEnPos(tab, x + i, y, c);
-			}
-		}
-		else if (dir == SUR) {
-			if (y + i > tab.nFils || esPared(celdaEnPos(tab, x, y + i))) {
-				dir = OESTE;
-				i = 0;
-			}
-			else {
-				c = celdaEnPos(tab, x, y + i);
-				actualizaIluminacionCelda(c, iluminar);
-				ponCeldaEnPos(tab, x, y + i, c);
-			}
-		}
-		else if (dir == OESTE) {
-			if (x - i < 0 || esPared(celdaEnPos(tab, x - i, y))) {
-				dir = NADA;
-			}
-			else {
-				c = celdaEnPos(tab, x - i, y);
-				actualizaIluminacionCelda(c, iluminar);
-				ponCeldaEnPos(tab, x - i, y, c);
-			}
-		}
-		
-	}
-}
-
-void ejecutarPos(tTablero& tab, int x, int y) {
-	tCelda c;
+bool ejecutarPos(tTablero& tab, int x, int y) {
+	bool valida = true;
 	if (esPared(celdaEnPos(tab, x, y)) || estaIluminada(celdaEnPos(tab, x, y))){
-		cout << "(" << x << "," << y << ")" << " No es una posicion valida" << endl;
+		valida = false;
 	}
 	else if (esPosReset(x, y)) {
-		for (int i = 0; i < tab.nFils; i++) {
-			for (int j = 0; j < tab.nCols; j++) {
-				if (esBombilla(celdaEnPos(tab, i, j))) {
+		cout << "Reseteando el tablero...\n\n";
+		for (int i = 0; i < getNumFilas(tab); i++) {
+			for (int j = 0; j < getNumCols(tab); j++) {
+				tCelda c = celdaEnPos(tab, i, j);
+				if (esBombilla(c)) {
 					apagaCelda(c);
 					ponCeldaEnPos(tab, i, j, c);
-					iluminarAlrededor(tab, x, y, false);
+					iluminarAlrededor(tab, i, j, false);
 				}
 			}
 		}
 	}
 	else {
 		bool iluminar;
-		if (esBombilla(celdaEnPos(tab, x, y))) {
+		tCelda c = celdaEnPos(tab, x, y);
+		if (esBombilla(c)) {
 			iluminar = false;
 			apagaCelda(c);
 			ponCeldaEnPos(tab, x, y, c);
@@ -106,9 +55,9 @@ void ejecutarPos(tTablero& tab, int x, int y) {
 			ponBombilla(c);
 			ponCeldaEnPos(tab, x, y, c);
 		}
-
 		iluminarAlrededor(tab, x, y, iluminar);
 	}
+	return valida;
 }
 
 /* ILUMINAR ALREDEDOR SIN tDir
@@ -128,10 +77,8 @@ void ejecutarPos(tTablero& tab, int x, int y) {
 		if (esPared(tab.tablero[x + i][y]) && x + i < tab.nCols) terminarDe = true;
 		else actualizaIluminaciónCelda(tab.tablero[x + i][y], iluminar);
 
-
 		i++;
 	}
-	actualizaIluminaciónCelda(celdaEnPos(tab, x, y), true);
 */
 
 /* ILUMINAR ALREDEDOR CON tDir PERO SIN SWITCH INUTIL

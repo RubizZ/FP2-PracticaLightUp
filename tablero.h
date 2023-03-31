@@ -12,12 +12,15 @@ typedef struct {
     tCelda tablero[MAX_FILS][MAX_COLS];
 } tTablero;
 
+typedef enum tDir { NORTE, SUR, ESTE, OESTE, NADA };
+
 
 int getNumFilas(const tTablero& tab);
 int getNumCols(const tTablero& tab);
 tCelda celdaEnPos(const tTablero& tab, int x, int y);
 void ponCeldaEnPos(tTablero& tab, int x, int y, const tCelda& c);
-bool leerTablero(ifstream& archivo, tTablero& tab, const string nombre);
+bool leerTablero(ifstream& archivo, tTablero& tab);
 void mostrarTablero(const tTablero& tab);
-int charAInt(char c);
 bool comprobarParedRestringida(const tTablero tab, const int x, const int y);
+void colocarBombillas(ifstream& archivo, tTablero& tab);
+void iluminarAlrededor(tTablero& tab, int x, int y, bool iluminar);
