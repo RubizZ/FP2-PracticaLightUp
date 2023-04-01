@@ -1,6 +1,7 @@
 //#include <iostream>
 
 #include "tablero.h"
+#define PI 3.14159265
 
 
 int getNumFilas(const tTablero& tab){
@@ -18,7 +19,10 @@ void ponCeldaEnPos(tTablero& tab, int x, int y, const tCelda& c){
 
 bool leerTablero(ifstream& archivo, tTablero& tab){
 	bool condicion = false;
-	archivo >> tab.nFils;
+
+	for (int i = 0; i < MAX_FILS; i++) for (int j = 0; j < MAX_COLS; j++) tab.tablero[i][j] = charToCelda('X'); //Inicializa el tablero MAXIMO a paredes para evitar errores
+																												//al comprobar paredes restringidas o poner bombillas
+	archivo >> tab.nFils;																						//fuera de limites (aunque esto ultimo tambien se compruebe despues)
 	archivo >> tab.nCols;
 
 	if (tab.nFils < MAX_FILS && tab.nCols < MAX_COLS) {
@@ -63,7 +67,7 @@ void mostrarTablero(const tTablero& tab){
 		cout << BLUE << " " << i << " " << RESET << "|";
 		for (int j = 0; j < tab.nCols; j++){
 			char c = celdaToChar(tab.tablero[i][j]);
-			if (estaIluminada(tab.tablero[i][j])) cout << BG_YELLOW << " " << c << " " << RESET;
+			if (estaIluminada(tab.tablero[i][j])) cout << BG_YELLOW << "   " << RESET;
 			else if (esBombilla(tab.tablero[i][j])) cout << BG_YELLOW << ORANGE << " " << c << " " << RESET;
 			else if (estaApagada(tab.tablero[i][j])) cout << BG_WHITE << " " << c << " " << RESET;
 			else if (esParedRestringida(tab.tablero[i][j])) cout << BG_BLACK << WHITE << " " << c << " " << RESET;
@@ -78,11 +82,18 @@ void mostrarTablero(const tTablero& tab){
 
 bool comprobarParedRestringida(const tTablero tab, const int x, const int y) {
 	int num = 0;
+	
 	if (esBombilla(tab.tablero[x][y - 1])) num++;
 	if (esBombilla(tab.tablero[x + 1][y])) num++;
 	if (esBombilla(tab.tablero[x][y + 1])) num++;
 	if (esBombilla(tab.tablero[x - 1][y])) num++;
-
+	/*
+	for (int i = 0; i < 4; i++) {
+		int seno = x + sin(i*PI/2);
+		int coseno = y + cos(i*PI/2);
+		if (esBombilla(tab.tablero[seno][coseno])) num++;
+	}
+	*/
 	return numParedRestringida(tab.tablero[x][y]) == num;
 }
 

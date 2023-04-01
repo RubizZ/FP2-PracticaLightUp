@@ -26,7 +26,7 @@ bool esPosReset(int x, int y) {
 
 bool ejecutarPos(tTablero& tab, int x, int y) {
 	bool valida = true;
-	if (esPared(celdaEnPos(tab, x, y)) || estaIluminada(celdaEnPos(tab, x, y))){
+	if (esPared(celdaEnPos(tab, x, y)) || estaIluminada(celdaEnPos(tab, x, y)) || x > getNumFilas(tab) - 1 || y > getNumCols(tab) - 1) {
 		valida = false;
 	}
 	else if (esPosReset(x, y)) {

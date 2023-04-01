@@ -8,11 +8,11 @@ char celdaToChar(const tCelda& cel){
 	if (cel.tipo == BOMBILLA) {
 		tipo = '*';
 	}
-	else if (cel.numBombillas != -1) {
-		switch (cel.numBombillas)	{
+	else if (cel.tipo == PARED && cel.numBombillas != -1) {
+		switch (cel.numBombillas) {
 		case 0:
 			tipo = '0';
-		break;
+			break;
 		case 1:
 			tipo = '1';
 			break;
@@ -41,7 +41,7 @@ tCelda charToCelda(char c) {
 		cel.tipo = BOMBILLA;
 		cel.numBombillas = 0;
 	}
-	else if (c == 0 || 1 || 2 || 3 || 4) {
+	else if (c == '0' || c == '1' || c == '2' || c == '3' || c == '4') {
 		cel.tipo = PARED;
 		cel.numBombillas = charAInt(c);
 	}

@@ -28,7 +28,7 @@ int main() {
 	
 	int x = 0, y = 0;
 	do {
-		cout << "En que posicion quieres poner o quitar una bombilla?\n -1 0 para salir, -1 -1 para resetear\n\n-> ";
+		cout << "En que posicion quieres poner o quitar una bombilla?\n-1 0 para salir, -1 -1 para resetear\n\n-> ";
 		cin >> x;
 		cin >> y;
 		cout << endl;
