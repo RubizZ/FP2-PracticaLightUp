@@ -1,6 +1,7 @@
 #pragma once
 #define TABLERO_H
 #include "celda.h"
+#include "colores.h"
 #include <iostream>
 #include <fstream>
 #include <iomanip>

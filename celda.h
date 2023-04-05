@@ -1,6 +1,6 @@
 #pragma once
 #define CELDA_H
-#include "colores.h"
+
 using namespace std;
 
 typedef enum tTipo { PARED, BOMBILLA, LIBRE };
