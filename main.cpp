@@ -20,13 +20,13 @@ int main() {
 			if (!archivo.is_open()) cout << "ERROR: El archivo no existe\n\n";
 		} while (!archivo.is_open());
 		cout << "Archivo existente, leyendo el tablero...\n\n";
-	} while (!leerTablero(archivo, tablero));
+	} while (!leerTablero(archivo, tablero) && !estaTerminado(tablero));
 	
 	colocarBombillas(archivo, tablero);
 	archivo.close();
 	mostrarTablero(tablero);
 	
-	int x = 0, y = 0;
+	int x = -1, y = 0;
 	do {
 		cout << "En que posicion quieres poner o quitar una bombilla?\n-1 0 para salir, -1 -1 para resetear\n\n-> ";
 		cin >> x;

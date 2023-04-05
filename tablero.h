@@ -2,7 +2,7 @@
 #define TABLERO_H
 #include "celda.h"
 #include <iostream>
-#include <fstream> 
+#include <fstream>
 #include <iomanip>
 
 const int MAX_FILS = 10;
@@ -12,7 +12,7 @@ typedef struct {
     tCelda tablero[MAX_FILS][MAX_COLS];
 } tTablero;
 
-typedef enum tDir { NORTE, SUR, ESTE, OESTE, NADA };
+typedef enum tDir { NORTE, SUR, ESTE, OESTE };
 
 
 int getNumFilas(const tTablero& tab);
@@ -24,3 +24,4 @@ void mostrarTablero(const tTablero& tab);
 bool comprobarParedRestringida(const tTablero tab, const int x, const int y);
 void colocarBombillas(ifstream& archivo, tTablero& tab);
 void iluminarAlrededor(tTablero& tab, int x, int y, bool iluminar);
+tDir operator ++ (tDir& dir, int);

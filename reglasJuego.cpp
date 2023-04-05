@@ -3,9 +3,9 @@
 bool estaTerminado(const tTablero& tab) {
 	bool condicion = true;
 	int i = 0;
-	while (i < tab.nFils && condicion) {
+	while (i < getNumFilas(tab) && condicion) {
 		int j = 0;
-		while (j < tab.nCols && condicion) {
+		while (j < getNumCols(tab) && condicion) {
 			tCelda c = celdaEnPos(tab, i, j);
 			if (estaIluminada(c) || esBombilla(c) || (esPared(c) && (!esParedRestringida(c) || comprobarParedRestringida(tab, i, j)))) {
 				j++;
@@ -46,127 +46,15 @@ bool ejecutarPos(tTablero& tab, int x, int y) {
 		bool iluminar;
 		tCelda c = celdaEnPos(tab, x, y);
 		if (esBombilla(c)) {
-			iluminar = false;
 			apagaCelda(c);
-			ponCeldaEnPos(tab, x, y, c);
+			iluminar = false;
 		}
 		else {
-			iluminar = true;
 			ponBombilla(c);
-			ponCeldaEnPos(tab, x, y, c);
+			iluminar = true;
 		}
+		ponCeldaEnPos(tab, x, y, c);
 		iluminarAlrededor(tab, x, y, iluminar);
 	}
 	return valida;
 }
-
-/* ILUMINAR ALREDEDOR SIN tDir
-	bool terminarIz = false, terminarDe = false, terminarAr = false, terminarAb = false;
-	int i = 1;
-	while (!terminarIz || !terminarDe || !terminarAr || !terminarAb) {
-
-		if (esPared(tab.tablero[x][y + i]) && y + i < tab.nFils) terminarAb = true;
-		else actualizaIluminaciónCelda(tab.tablero[x][y + i], iluminar);
-
-		if (esPared(tab.tablero[x][y - i]) && y - i >= 0) terminarAr = true;
-		else actualizaIluminaciónCelda(tab.tablero[x][y - i], iluminar);
-
-		if (esPared(tab.tablero[x - i][y]) && x - i >= 0) terminarIz = true;
-		else actualizaIluminaciónCelda(tab.tablero[x - i][y], iluminar);
-
-		if (esPared(tab.tablero[x + i][y]) && x + i < tab.nCols) terminarDe = true;
-		else actualizaIluminaciónCelda(tab.tablero[x + i][y], iluminar);
-
-		i++;
-	}
-*/
-
-/* ILUMINAR ALREDEDOR CON tDir PERO SIN SWITCH INUTIL
-	while (dir < NADA) {
-		if (dir == NORTE) {
-			if (esPared(celdaEnPos(tab, x, y - i)) || y - i == 0) {
-				dir = ESTE;
-				i = 1;
-			}
-			else {
-				c = celdaEnPos(tab, x, y - i);
-				actualizaIluminacionCelda(c, iluminar);
-				ponCeldaEnPos(tab, x, y - i, c);
-			}
-		}
-		else if (dir == ESTE) {
-			if (esPared(celdaEnPos(tab, x + i, y)) || x + i == tab.nCols) {
-				dir = SUR;
-				i = 1;
-			}
-			else {
-				c = celdaEnPos(tab, x + i, y);
-				actualizaIluminacionCelda(c, iluminar);
-				ponCeldaEnPos(tab, x + i, y, c);
-			}
-		}
-		else if (dir == SUR) {
-			if (esPared(celdaEnPos(tab, x, y + i)) || y + i == tab.nFils) {
-				dir = OESTE;
-				i = 1;
-			}
-			else {
-				c = celdaEnPos(tab, x, y + i);
-				actualizaIluminacionCelda(c, iluminar);
-				ponCeldaEnPos(tab, x, y + i, c);
-			}
-		}
-		else if (dir == OESTE) {
-			if (esPared(celdaEnPos(tab, x - i, y)) || x - i == 0) {
-				dir = NADA;
-			}
-			else {
-				c = celdaEnPos(tab, x - i, y);
-				actualizaIluminacionCelda(c, iluminar);
-				ponCeldaEnPos(tab, x - i, y, c);
-			}
-		}
-		i++;
-	}
-*/
-
-/* ILUMINAR ALREDEDOR CON tDir y switch useless
-	int i = 1;
-	switch (dir) {
-	NORTE:
-		while (!esPared(celdaEnPos(tab, x + i, y)) && y - i != 0) {
-			c = celdaEnPos(tab, x, y - i);
-			actualizaIluminacionCelda(c, iluminar);
-			ponCeldaEnPos(tab, x, y - i, c);
-			i++;
-		}
-		dir = ESTE;
-		break;
-	ESTE:
-		while (!esPared(celdaEnPos(tab, x + i, y)) && x + i != tab.nCols) {
-			c = celdaEnPos(tab, x + i, y);
-			actualizaIluminacionCelda(c, iluminar);
-			ponCeldaEnPos(tab, x + i, y, c);
-			i++;
-		}
-		dir = SUR;
-		break;
-	SUR:
-		while (!esPared(celdaEnPos(tab, x, y + i)) && y + i != tab.nFils) {
-			c = celdaEnPos(tab, x, y + i);
-			actualizaIluminacionCelda(c, iluminar);
-			ponCeldaEnPos(tab, x, y + i, c);
-			i++;
-		}
-		dir = OESTE;
-		break;
-	OESTE:
-		while (!esPared(celdaEnPos(tab, x - i, y)) && x - i != 0) {
-			c = celdaEnPos(tab, x - i, y);
-			actualizaIluminacionCelda(c, iluminar);
-			ponCeldaEnPos(tab, x - i, y, c);
-			i++;
-		}
-		break;
-	}
-	*/

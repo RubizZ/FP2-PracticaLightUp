@@ -1,8 +1,4 @@
-//#include <iostream>
-
 #include "tablero.h"
-#define PI 3.14159265
-
 
 int getNumFilas(const tTablero& tab){
 	return tab.nFils;
@@ -20,9 +16,7 @@ void ponCeldaEnPos(tTablero& tab, int x, int y, const tCelda& c){
 bool leerTablero(ifstream& archivo, tTablero& tab){
 	bool condicion = false;
 
-	for (int i = 0; i < MAX_FILS; i++) for (int j = 0; j < MAX_COLS; j++) tab.tablero[i][j] = charToCelda('X'); //Inicializa el tablero MAXIMO a paredes para evitar errores
-																												//al comprobar paredes restringidas o poner bombillas
-	archivo >> tab.nFils;																						//fuera de limites (aunque esto ultimo tambien se compruebe despues)
+	archivo >> tab.nFils;
 	archivo >> tab.nCols;
 
 	if (tab.nFils < MAX_FILS && tab.nCols < MAX_COLS) {
@@ -33,21 +27,6 @@ bool leerTablero(ifstream& archivo, tTablero& tab){
 				archivo >> tipo;
 
 				tab.tablero[i][j] = charToCelda(tipo);
-				
-				/*
-				if (tipo == '.') {
-					tab.tablero[i][j].tipo = libre;
-					tab.tablero[i][j].numbombillas = 0;
-				}
-				else if (tipo == 'x') {
-					tab.tablero[i][j].tipo = pared;
-					tab.tablero[i][j].numbombillas = -1;
-				}
-				else {
-					tab.tablero[i][j].tipo = pared;
-					tab.tablero[i][j].numbombillas = charaint(tipo);
-				}
-				*/
 			}
 		}
 	}
@@ -83,55 +62,65 @@ void mostrarTablero(const tTablero& tab){
 bool comprobarParedRestringida(const tTablero tab, const int x, const int y) {
 	int num = 0;
 	
-	if (esBombilla(tab.tablero[x][y - 1])) num++;
-	if (esBombilla(tab.tablero[x + 1][y])) num++;
-	if (esBombilla(tab.tablero[x][y + 1])) num++;
-	if (esBombilla(tab.tablero[x - 1][y])) num++;
-	/*
-	for (int i = 0; i < 4; i++) {
-		int seno = x + sin(i*PI/2);
-		int coseno = y + cos(i*PI/2);
-		if (esBombilla(tab.tablero[seno][coseno])) num++;
-	}
-	*/
+	if (x - 1 >= 0 && esBombilla(tab.tablero[x - 1][y])) num++;
+	if (y + 1 < tab.nCols && esBombilla(tab.tablero[x][y + 1])) num++;
+	if (x + 1 < tab.nFils && esBombilla(tab.tablero[x + 1][y])) num++;
+	if (y - 1 >= 0 && esBombilla(tab.tablero[x][y - 1])) num++;
+	
 	return numParedRestringida(tab.tablero[x][y]) == num;
 }
 
 void iluminarAlrededor(tTablero& tab, int x, int y, bool iluminar) {
-	tCelda c;
 	tDir dir = NORTE;
+	do {
+		int i = 1;
+		switch (dir) {
+		case NORTE:
+			while (x - i >= 0 && !esPared(celdaEnPos(tab, x - i, y))) {
+				actualizaIluminacionCelda(tab.tablero[x - i][y], iluminar);
+				i++;
+			}
+			break;
+		case ESTE:
+			while (y + i < tab.nFils && !esPared(tab.tablero[x][y + i])) {
+				actualizaIluminacionCelda(tab.tablero[x][y + i], iluminar);
+				i++;
+			}
+			break;
+		case SUR:
+			while (x + i < tab.nCols && !esPared(tab.tablero[x + i][y])) {
+				actualizaIluminacionCelda(tab.tablero[x + i][y], iluminar);
+				i++;
+			}
+			break;
+		case OESTE:
+			while (y - i >= 0 && !esPared(tab.tablero[x][y - i])) {
+				actualizaIluminacionCelda(tab.tablero[x][y - i], iluminar);
+				i++;
+			}
+			break;
+		}
+		dir++;
+	} while (dir != NORTE);
+}
 
-	int i = 0;
-	while (dir != NADA) {
-		i++;
-		if (dir == NORTE) {
-			if (y - i < 0 || esPared(tab.tablero[x][y - i])) {
-				dir = ESTE;
-				i = 0;
-			}
-			else actualizaIluminacionCelda(tab.tablero[x][y - i], iluminar);
-		}
-		else if (dir == ESTE) {
-			if (x + i > tab.nCols || esPared(tab.tablero[x + i][y])) {
-				dir = SUR;
-				i = 0;
-			}
-			else actualizaIluminacionCelda(tab.tablero[x + i][y], iluminar);
-		}
-		else if (dir == SUR) {
-			if (y + i > tab.nFils || esPared(tab.tablero[x][y + i])) {
-				dir = OESTE;
-				i = 0;
-			}
-			else actualizaIluminacionCelda(tab.tablero[x][y + i], iluminar);
-		}
-		else if (dir == OESTE) {
-			if (x - i < 0 || esPared(celdaEnPos(tab, x - i, y))) {
-				dir = NADA;
-			}
-			else actualizaIluminacionCelda(tab.tablero[x - i][y], iluminar);
-		}
+tDir operator ++ (tDir& dir, int) {
+	tDir dirAnterior = dir;
+	switch (dir) {
+	case NORTE:
+		dir = ESTE;
+		break;
+	case ESTE:
+		dir = SUR;
+		break;
+	case SUR:
+		dir = OESTE;
+		break;
+	case OESTE:
+		dir = NORTE;
+		break;
 	}
+	return dirAnterior;
 }
 
 void colocarBombillas(ifstream& archivo, tTablero& tab) {
@@ -140,7 +129,6 @@ void colocarBombillas(ifstream& archivo, tTablero& tab) {
 	if (bombillas > 0) {
 		for (int i = 0; i < bombillas; i++) {
 			int fila, columna;
-			tCelda c;
 			archivo >> fila;
 			archivo >> columna;
 
@@ -149,3 +137,26 @@ void colocarBombillas(ifstream& archivo, tTablero& tab) {
 		}
 	}
 }
+
+
+
+/* iluminarAlrededor SIN tDir QUE ILUMINA UNIFORMEMENTE EN CADA DIRECCION
+	bool terminarN = false, terminarE = false, terminarS = false, terminarO = false;
+	int i = 1;
+	while (!terminarN || !terminarE || !terminarS || !terminarO) {
+
+		if (!terminarN && !esPared(tab.tablero[x][y - i]) && y - i >= 0) actualizaIluminaciónCelda(tab.tablero[x][y - i], iluminar);
+		else terminarN = true;
+
+		if (!terminarE && !esPared(tab.tablero[x + i][y]) && x + i < tab.nCols) actualizaIluminaciónCelda(tab.tablero[x + i][y], iluminar);
+		else terminarE = true;
+		
+		if (!terminarS && !esPared(tab.tablero[x][y + i]) && y + i < tab.nFils) actualizaIluminaciónCelda(tab.tablero[x][y + i], iluminar); 
+		else terminarS = true;
+
+		if (!terminarO && !esPared(tab.tablero[x - i][y]) && x - i >= 0) actualizaIluminaciónCelda(tab.tablero[x - i][y], iluminar);
+		else terminarO = true;
+
+		i++;
+	}
+*/

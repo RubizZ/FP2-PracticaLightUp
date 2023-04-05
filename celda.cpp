@@ -1,7 +1,4 @@
-//(-1,0) para salir y (-1, -1) para resetear
-#include <iostream>
 #include "celda.h"
-
 
 char celdaToChar(const tCelda& cel){
 	char tipo = ' ';	//Si no es nada de los if, sera una celda vacia (un espacio)
