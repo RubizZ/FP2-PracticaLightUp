@@ -1,7 +1,7 @@
 #include "celda.h"
 
 char celdaToChar(const tCelda& cel){
-	char tipo = ' ';	//Si no es nada de los if, sera una celda vacia (un espacio)
+	char tipo = ' ';
 	if (cel.tipo == BOMBILLA) {
 		tipo = '*';
 	}
@@ -29,7 +29,7 @@ char celdaToChar(const tCelda& cel){
 }
 
 tCelda charToCelda(char c) {
-	tCelda cel = {LIBRE, 0};	//Si no es nada de los if, sera un . (LIBRE y 0)
+	tCelda cel = {LIBRE, 0};
 	if (c == 'X') {
 		cel.tipo = PARED;
 		cel.numBombillas = -1;

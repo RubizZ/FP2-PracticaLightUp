@@ -59,67 +59,31 @@ void mostrarTablero(const tTablero& tab){
 	cout << endl << endl;
 }
 
-bool comprobarParedRestringida(const tTablero tab, const int x, const int y) {
-	int num = 0;
-	
-	if (x - 1 >= 0 && esBombilla(tab.tablero[x - 1][y])) num++;
-	if (y + 1 < tab.nCols && esBombilla(tab.tablero[x][y + 1])) num++;
-	if (x + 1 < tab.nFils && esBombilla(tab.tablero[x + 1][y])) num++;
-	if (y - 1 >= 0 && esBombilla(tab.tablero[x][y - 1])) num++;
-	
-	return numParedRestringida(tab.tablero[x][y]) == num;
+void avanzarPosDir(int& x, int& y, const tDir dir) {
+	switch (dir) {
+	case NORTE: x--; break;
+	case ESTE: y++; break;
+	case SUR: x++; break;
+	case OESTE: y--; break;
+	}
 }
 
 void iluminarAlrededor(tTablero& tab, int x, int y, bool iluminar) {
-	tDir dir = NORTE;
-	do {
-		int i = 1;
-		switch (dir) {
-		case NORTE:
-			while (x - i >= 0 && !esPared(celdaEnPos(tab, x - i, y))) {
-				actualizaIluminacionCelda(tab.tablero[x - i][y], iluminar);
-				i++;
-			}
-			break;
-		case ESTE:
-			while (y + i < tab.nFils && !esPared(tab.tablero[x][y + i])) {
-				actualizaIluminacionCelda(tab.tablero[x][y + i], iluminar);
-				i++;
-			}
-			break;
-		case SUR:
-			while (x + i < tab.nCols && !esPared(tab.tablero[x + i][y])) {
-				actualizaIluminacionCelda(tab.tablero[x + i][y], iluminar);
-				i++;
-			}
-			break;
-		case OESTE:
-			while (y - i >= 0 && !esPared(tab.tablero[x][y - i])) {
-				actualizaIluminacionCelda(tab.tablero[x][y - i], iluminar);
-				i++;
-			}
-			break;
+	int xI = x, yI = y;
+	for (tDir dir = NORTE; dir <= OESTE; dir++) {
+		x = xI;
+		y = yI;
+		avanzarPosDir(x, y, dir);
+		while (x >= 0 && x < tab.nFils && y >= 0 && y < tab.nCols && !esPared(tab.tablero[x][y])) {
+			actualizaIluminacionCelda(tab.tablero[x][y], iluminar);
+			avanzarPosDir(x, y, dir);
 		}
-		dir++;
-	} while (dir != NORTE);
+	}
 }
 
 tDir operator ++ (tDir& dir, int) {
 	tDir dirAnterior = dir;
-	switch (dir) {
-	case NORTE:
-		dir = ESTE;
-		break;
-	case ESTE:
-		dir = SUR;
-		break;
-	case SUR:
-		dir = OESTE;
-		break;
-	case OESTE:
-		dir = NORTE;
-		break;
-	}
+	dir = tDir(dir + 1);
 	return dirAnterior;
 }
 
@@ -137,26 +101,3 @@ void colocarBombillas(ifstream& archivo, tTablero& tab) {
 		}
 	}
 }
-
-
-
-/* iluminarAlrededor SIN tDir QUE ILUMINA UNIFORMEMENTE EN CADA DIRECCION
-	bool terminarN = false, terminarE = false, terminarS = false, terminarO = false;
-	int i = 1;
-	while (!terminarN || !terminarE || !terminarS || !terminarO) {
-
-		if (!terminarN && !esPared(tab.tablero[x][y - i]) && y - i >= 0) actualizaIluminaciónCelda(tab.tablero[x][y - i], iluminar);
-		else terminarN = true;
-
-		if (!terminarE && !esPared(tab.tablero[x + i][y]) && x + i < tab.nCols) actualizaIluminaciónCelda(tab.tablero[x + i][y], iluminar);
-		else terminarE = true;
-		
-		if (!terminarS && !esPared(tab.tablero[x][y + i]) && y + i < tab.nFils) actualizaIluminaciónCelda(tab.tablero[x][y + i], iluminar); 
-		else terminarS = true;
-
-		if (!terminarO && !esPared(tab.tablero[x - i][y]) && x - i >= 0) actualizaIluminaciónCelda(tab.tablero[x - i][y], iluminar);
-		else terminarO = true;
-
-		i++;
-	}
-*/

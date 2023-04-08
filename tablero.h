@@ -22,7 +22,7 @@ tCelda celdaEnPos(const tTablero& tab, int x, int y);
 void ponCeldaEnPos(tTablero& tab, int x, int y, const tCelda& c);
 bool leerTablero(ifstream& archivo, tTablero& tab);
 void mostrarTablero(const tTablero& tab);
-bool comprobarParedRestringida(const tTablero tab, const int x, const int y);
 void colocarBombillas(ifstream& archivo, tTablero& tab);
 void iluminarAlrededor(tTablero& tab, int x, int y, bool iluminar);
 tDir operator ++ (tDir& dir, int);
+void avanzarPosDir(int& x, int& y, const tDir dir);

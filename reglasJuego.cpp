@@ -58,3 +58,15 @@ bool ejecutarPos(tTablero& tab, int x, int y) {
 	}
 	return valida;
 }
+
+bool comprobarParedRestringida(const tTablero tab, int x, int y) {
+	int num = 0;
+	int xI = x, yI = y;
+	for (tDir dir = NORTE; dir <= OESTE; dir++) {
+		avanzarPosDir(x, y, dir);
+		if (x >= 0 && x < getNumFilas(tab) && y >= 0 && y < getNumCols(tab) && esBombilla(celdaEnPos(tab, x, y))) num++;
+		x = xI;
+		y = yI;
+	}
+	return numParedRestringida(celdaEnPos(tab, xI, yI)) == num;
+}
