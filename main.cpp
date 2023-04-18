@@ -1,10 +1,19 @@
 #include "reglasJuego.h"
 #include "tablero.h"
+#include "listaPosiciones.h";
+
 
 int main() {
 	tTablero tablero;
 	ifstream archivo;
+	ofstream archivo2;
 	string nombre;
+
+	tListaPosiciones lp;
+	iniciaListaPosiciones(lp);
+	insertar(lp, { 1, 2 });
+	archivo2.open("jajajaja.txt");
+	guardarListaBombillas(archivo2, lp);
 
 	do {
 		if (archivo.is_open()) {
