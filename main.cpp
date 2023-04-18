@@ -1,7 +1,12 @@
+// Practica FP2 LIGHTUP
+//
+// Hecho por Rubén Hidalgo Arias y Álvaro Moreno Arribas
+
 #include "reglasJuego.h"
 #include "tablero.h"
 #include "listaPosiciones.h";
 
+void colocarBombillas(ifstream& archivo, tTablero& tab);
 
 int main() {
 	tTablero tablero;
@@ -9,18 +14,13 @@ int main() {
 	ofstream archivo2;
 	string nombre;
 
-	tListaPosiciones lp;
-	iniciaListaPosiciones(lp);
-	insertar(lp, { 1, 2 });
-	archivo2.open("jajajaja.txt");
-	guardarListaBombillas(archivo2, lp);
-
+	bool primera = true;
 	do {
-		if (archivo.is_open()) {
+		if (!primera && archivo.is_open()) {
 			cout << "ERROR: El archivo no es un tablero valido\n\n";
 			archivo.close();
 		}
-		else 
+		else primera = false;
 		do {
 			cout << "Introduce el archivo del tablero\n\n-> ";
 			cin >> nombre;
@@ -29,7 +29,7 @@ int main() {
 			if (!archivo.is_open()) cout << "ERROR: El archivo no existe\n\n";
 		} while (!archivo.is_open());
 		cout << "Archivo existente, leyendo el tablero...\n\n";
-	} while (!leerTablero(archivo, tablero) && !estaTerminado(tablero));
+	} while (!leerTablero(archivo, tablero) || estaTerminado(tablero));
 	
 	colocarBombillas(archivo, tablero);
 	archivo.close();
@@ -52,4 +52,20 @@ int main() {
 	} while (!esPosQuit(x, y) && !estaTerminado(tablero));
 
 	return 33;
+}
+
+void colocarBombillas(ifstream& archivo, tTablero& tab) {
+	int bombillas = 0;
+	archivo >> bombillas;
+	if (bombillas > 0) {
+		for (int i = 0; i < bombillas; i++) {
+			int fila, columna;
+			archivo >> fila;
+			archivo >> columna;
+			tCelda c;
+			ponBombilla(c);
+			ponCeldaEnPos(tab, fila, columna, c);
+			iluminarAlrededor(tab, fila, columna, true);
+		}
+	}
 }

@@ -1,5 +1,11 @@
 #include "reglasJuego.h"
 
+bool esPosReset(int x, int y);
+bool comprobarParedRestringida(const tTablero tab, const int x, const int y);
+tDir operator ++ (tDir& dir, int);
+void avanzarPosDir(int& x, int& y, const tDir dir);
+void reset(tTablero& tab);
+
 bool estaTerminado(const tTablero& tab) {
 	bool condicion = true;
 	int i = 0;
@@ -30,17 +36,7 @@ bool ejecutarPos(tTablero& tab, int x, int y) {
 		valida = false;
 	}
 	else if (esPosReset(x, y)) {
-		cout << "Reseteando el tablero...\n\n";
-		for (int i = 0; i < getNumFilas(tab); i++) {
-			for (int j = 0; j < getNumCols(tab); j++) {
-				tCelda c = celdaEnPos(tab, i, j);
-				if (esBombilla(c)) {
-					apagaCelda(c);
-					ponCeldaEnPos(tab, i, j, c);
-					iluminarAlrededor(tab, i, j, false);
-				}
-			}
-		}
+		reset(tab);
 	}
 	else {
 		bool iluminar;
@@ -69,4 +65,48 @@ bool comprobarParedRestringida(const tTablero tab, int x, int y) {
 		y = yI;
 	}
 	return numParedRestringida(celdaEnPos(tab, xI, yI)) == num;
+}
+
+void iluminarAlrededor(tTablero& tab, int x, int y, bool iluminar) {
+	int xI = x, yI = y;
+	for (tDir dir = NORTE; dir <= OESTE; dir++) {
+		x = xI;
+		y = yI;
+		avanzarPosDir(x, y, dir);
+		while (x >= 0 && x < getNumFilas(tab) && y >= 0 && y < getNumCols(tab) && !esPared(celdaEnPos(tab, x, y))) {
+			tCelda c = celdaEnPos(tab, x, y);
+			actualizaIluminacionCelda(c, iluminar);
+			ponCeldaEnPos(tab, x, y, c);
+			avanzarPosDir(x, y, dir);
+		}
+	}
+}
+
+tDir operator ++ (tDir& dir, int) {
+	tDir dirAnterior = dir;
+	dir = tDir(dir + 1);
+	return dirAnterior;
+}
+
+void avanzarPosDir(int& x, int& y, const tDir dir) {
+	switch (dir) {
+	case NORTE: x--; break;
+	case ESTE: y++; break;
+	case SUR: x++; break;
+	case OESTE: y--; break;
+	}
+}
+
+void reset(tTablero& tab) {
+	cout << "Reseteando el tablero...\n\n";
+	for (int i = 0; i < getNumFilas(tab); i++) {
+		for (int j = 0; j < getNumCols(tab); j++) {
+			tCelda c = celdaEnPos(tab, i, j);
+			if (esBombilla(c)) {
+				apagaCelda(c);
+				ponCeldaEnPos(tab, i, j, c);
+				iluminarAlrededor(tab, i, j, false);
+			}
+		}
+	}
 }

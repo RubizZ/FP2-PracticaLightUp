@@ -40,7 +40,7 @@ tCelda charToCelda(char c) {
 	}
 	else if (c == '0' || c == '1' || c == '2' || c == '3' || c == '4') {
 		cel.tipo = PARED;
-		cel.numBombillas = charAInt(c);
+		cel.numBombillas = int(c) - int('0');
 	}
 	/*
 	else if (c == '.') {
@@ -49,15 +49,6 @@ tCelda charToCelda(char c) {
 	}
 	*/
 	return cel;
-}
-int charAInt(char c) {
-	int n = 4;
-	if (c == '0') n = 0;
-	else if (c == '1') n = 1;
-	else if (c == '2') n = 2;
-	else if (c == '3') n = 3;
-	//else if (c == '4') n = 4;
-	return n;
 }
 
 bool esPared(const tCelda& c){
@@ -88,4 +79,5 @@ void actualizaIluminacionCelda(tCelda& c, bool iluminar) {
 }
 void ponBombilla(tCelda& c) {
 	c.tipo = BOMBILLA;
+	c.numBombillas = 0;
 }

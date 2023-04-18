@@ -146,6 +146,14 @@
     <ClInclude Include="reglasJuego.h" />
     <ClInclude Include="tablero.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="codigoNoUsado.txt" />
+    <Text Include="tablero.txt" />
+    <Text Include="tablero2.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="solucionTablero2.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

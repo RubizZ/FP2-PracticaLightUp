@@ -12,7 +12,6 @@ typedef struct {
 
 char celdaToChar(const tCelda& c);
 tCelda charToCelda(char c);
-int charAInt(char c);
 bool esPared(const tCelda& c);
 bool esParedRestringida(const tCelda& c);
 int numParedRestringida(const tCelda& c);

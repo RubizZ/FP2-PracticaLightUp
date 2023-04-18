@@ -59,45 +59,5 @@ void mostrarTablero(const tTablero& tab){
 	cout << endl << endl;
 }
 
-void avanzarPosDir(int& x, int& y, const tDir dir) {
-	switch (dir) {
-	case NORTE: x--; break;
-	case ESTE: y++; break;
-	case SUR: x++; break;
-	case OESTE: y--; break;
-	}
-}
 
-void iluminarAlrededor(tTablero& tab, int x, int y, bool iluminar) {
-	int xI = x, yI = y;
-	for (tDir dir = NORTE; dir <= OESTE; dir++) {
-		x = xI;
-		y = yI;
-		avanzarPosDir(x, y, dir);
-		while (x >= 0 && x < tab.nFils && y >= 0 && y < tab.nCols && !esPared(tab.tablero[x][y])) {
-			actualizaIluminacionCelda(tab.tablero[x][y], iluminar);
-			avanzarPosDir(x, y, dir);
-		}
-	}
-}
 
-tDir operator ++ (tDir& dir, int) {
-	tDir dirAnterior = dir;
-	dir = tDir(dir + 1);
-	return dirAnterior;
-}
-
-void colocarBombillas(ifstream& archivo, tTablero& tab) {
-	int bombillas = 0;
-	archivo >> bombillas;
-	if (bombillas > 0) {
-		for (int i = 0; i < bombillas; i++) {
-			int fila, columna;
-			archivo >> fila;
-			archivo >> columna;
-
-			ponBombilla(tab.tablero[fila][columna]);
-			iluminarAlrededor(tab, fila, columna, true);
-		}
-	}
-}
