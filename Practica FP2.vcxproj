@@ -132,8 +132,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="celda.cpp" />
+    <ClCompile Include="listaPartidas.cpp" />
     <ClCompile Include="listaPosiciones.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="partida.cpp" />
     <ClCompile Include="posicion.cpp" />
     <ClCompile Include="reglasJuego.cpp" />
     <ClCompile Include="tablero.cpp" />
@@ -141,7 +143,9 @@
   <ItemGroup>
     <ClInclude Include="celda.h" />
     <ClInclude Include="colores.h" />
+    <ClInclude Include="listaPartidas.h" />
     <ClInclude Include="listaPosiciones.h" />
+    <ClInclude Include="partida.h" />
     <ClInclude Include="posicion.h" />
     <ClInclude Include="reglasJuego.h" />
     <ClInclude Include="tablero.h" />

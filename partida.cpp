@@ -4,6 +4,7 @@
 
 void colocaEnArrayBombillas(ifstream& archivo, tListaPosiciones& listaBombillas);
 void ponBombillas(tPartida& partida);
+char charToArchivo(char c);
 
 void iniciaPartida(tPartida& partida) {
 	iniciaListaPosiciones(partida.listaBombillas);
@@ -43,10 +44,8 @@ bool operator<(const tPartida& partida1, const tPartida& partida2) {
 	return partida1.nivel < partida2.nivel;
 }
 
-bool esigual(const tPartida& partida, int nivel){
-	bool coincide = false;
-	if (partida.nivel == nivel) coincide = true;
-	return coincide;
+bool operator ==(const tPartida& partida1, const tPartida& partida2) {
+	return partida1.nivel == partida2.nivel;
 }
 
 bool juega(tPartida& partida, int& nIt) {
@@ -55,6 +54,7 @@ bool juega(tPartida& partida, int& nIt) {
 	ponBombillas(partida);
 
 	mostrarTablero(partida.tablero);
+	nIt = 0;
 
 	int x = -1, y = 0;
 	do {
@@ -64,7 +64,10 @@ bool juega(tPartida& partida, int& nIt) {
 		cout << endl;
 
 		if (!esPosQuit(x, y)) {
-			if (ejecutarPos(partida.tablero, x, y)) mostrarTablero(partida.tablero);
+			if (ejecutarPos(partida.tablero, x, y)) {
+				mostrarTablero(partida.tablero);
+				nIt++;
+			}
 			if (estaTerminado(partida.tablero)) cout << "Has terminado el juego!\n";
 		}
 		else {
@@ -85,20 +88,25 @@ void ponBombillas(tPartida& partida) {
 }
 
 void guardarPartida(ofstream& archivo, const tPartida& partida) {
-	char c;
-
-	archivo << partida.nivel << endl;
-	archivo << getNumFilas(partida.tablero) << " "<< getNumCols(partida.tablero)<<endl;
 	
-	for (int i = 0;i < getNumFilas(partida.tablero) ;i++) {
+	archivo << partida.nivel << endl;
+	archivo << getNumFilas(partida.tablero) << " " << getNumCols(partida.tablero)<<endl;
+	
+	for (int i = 0; i < getNumFilas(partida.tablero); i++) {
 		for (int j = 0; j < getNumCols(partida.tablero); j++) {
-			c = celdaToChar(celdaEnPos(partida.tablero, i, j));
-			if (c == ' ') archivo << ".";
-			else if (c == '0') archivo << "X";
-			else if (c == '1' || c == '2' || c == '3' || c == '4') archivo << c;
+			char c = charToArchivo(celdaToChar(celdaEnPos(partida.tablero, i, j)));
+			archivo << c;
 		}
 		archivo << endl;
 	}
+	guardarListaBombillas(archivo, partida.listaBombillas);
+}
+
+char charToArchivo(char c) {
+	if (c == ' ') c = '.';
+	else if (c == '0') c = 'X';
+	// else c = c;
+	return c;
 }
 
 void destruyePartida(tPartida& partida) {
