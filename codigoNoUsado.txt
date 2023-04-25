@@ -1,3 +1,5 @@
+https://prod.liveshare.vsengsaas.visualstudio.com/join?1D18036A54728678E6575311678102D3AB4B
+
 /* iluminarAlrededor SIN tDir QUE ILUMINA UNIFORMEMENTE EN CADA DIRECCION
 	bool terminarN = false, terminarE = false, terminarS = false, terminarO = false;
 	int i = 1;
