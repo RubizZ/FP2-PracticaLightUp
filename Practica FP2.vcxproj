@@ -154,6 +154,7 @@
     <Text Include="codigoNoUsado.txt" />
     <Text Include="tablero.txt" />
     <Text Include="tablero2.txt" />
+    <Text Include="tableros.txt" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="solucionTablero2.png" />

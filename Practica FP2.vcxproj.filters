@@ -33,6 +33,12 @@
     <ClCompile Include="listaPosiciones.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="listaPartidas.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="partida.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="celda.h">
@@ -53,6 +59,12 @@
     <ClInclude Include="listaPosiciones.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="listaPartidas.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="partida.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="codigoNoUsado.txt">
@@ -62,6 +74,9 @@
       <Filter>Archivos de recursos</Filter>
     </Text>
     <Text Include="tablero2.txt">
+      <Filter>Archivos de recursos</Filter>
+    </Text>
+    <Text Include="tableros.txt">
       <Filter>Archivos de recursos</Filter>
     </Text>
   </ItemGroup>
