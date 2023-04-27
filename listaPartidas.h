@@ -14,7 +14,7 @@ typedef struct
 } tListaPartidas;
 
 void iniciaListaPartidas(tListaPartidas& listaPartidas);
-void cargarListaPartidas(ifstream& archivo, tListaPartidas& listaPartidas);
+bool cargarListaPartidas(ifstream& archivo, tListaPartidas& listaPartidas);
 void insertarOrd(tListaPartidas& listaPartidas, const tPartida& partida);
 int buscaPos(const tListaPartidas& listaPartidas, int nivel);
 tPtrPartida dameElem(const tListaPartidas& listaPartidas, int pos);

@@ -18,7 +18,7 @@ void insertar(tListaPosiciones& lp, const tPosicion& pos) {
 		lp.arrayPos = aux;
 		aux = nullptr;
 	}
-	lp.arrayPos[lp.cont] = pos;
+	lp.arrayPos[lp.cont] = pos; //Arreglar esta puta vergüenza de linea
 	lp.cont++;
 }
 int dameNumElem(const tListaPosiciones& lp) {

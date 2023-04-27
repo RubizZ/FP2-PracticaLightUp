@@ -6,18 +6,24 @@ void iniciaListaPartidas(tListaPartidas& listaPartidas) {
 	listaPartidas.nElem = 0;
 }
 
-void cargarListaPartidas(ifstream& archivo, tListaPartidas& listaPartidas) {
+bool cargarListaPartidas(ifstream& archivo, tListaPartidas& listaPartidas) {
+	bool condicion = false;
 	archivo >> listaPartidas.nElem;
-	for (int i = 0; i < listaPartidas.nElem; i++) {
-		
-		tPartida partida;
-		iniciaPartida(partida);
-		cargarPartida(archivo, partida);
+	if (listaPartidas.nElem > 0 && listaPartidas.nElem < MAX_PARTIDAS) {
+		condicion = true;
+		for (int i = 0; i < listaPartidas.nElem; i++) {
 
-		insertarOrd(listaPartidas, partida);
+			tPartida partida;
+			iniciaPartida(partida);
+			cargarPartida(archivo, partida);
+
+			insertarOrd(listaPartidas, partida);
+		}
 	}
+	return condicion;
 }
 
+//Cambiar a busqueda binaria y combinar while con buscaPos
 void insertarOrd(tListaPartidas& listaPartidas, const tPartida& partida) {
 	int i = 0;
 	bool terminar = false;
@@ -38,6 +44,7 @@ void mueve(tListaPartidas& listaPartidas, const int i, const bool derecha) {
 	}
 }
 
+//Cambiar a busqueda binaria y combinar while con insertarOrd
 int buscaPos(const tListaPartidas& listaPartidas, int nivel) {
 	bool encontrado = false;
 	int i = 0;
