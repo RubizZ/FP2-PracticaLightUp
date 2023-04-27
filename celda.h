@@ -21,3 +21,4 @@ bool estaIluminada(const tCelda& c);
 void apagaCelda(tCelda& c);
 void actualizaIluminacionCelda(tCelda& c, bool iluminar);
 void ponBombilla(tCelda& c);
+char celdaToCharArchivo(const tCelda& c);
