@@ -8,13 +8,13 @@ void iniciaListaPartidas(tListaPartidas& listaPartidas) {
 
 bool cargarListaPartidas(ifstream& archivo, tListaPartidas& listaPartidas) {
 	bool condicion = false;
-	archivo >> listaPartidas.nElem;
-	if (listaPartidas.nElem > 0 && listaPartidas.nElem < MAX_PARTIDAS) {
+	int numPartidas;
+	archivo >> numPartidas;
+	if (numPartidas > 0 && numPartidas < MAX_PARTIDAS) {
 		condicion = true;
-		for (int i = 0; i < listaPartidas.nElem; i++) {
+		for (int i = 0; i < numPartidas; i++) {
 
 			tPartida partida;
-			iniciaPartida(partida);
 			cargarPartida(archivo, partida);
 
 			insertarOrd(listaPartidas, partida);
@@ -23,14 +23,11 @@ bool cargarListaPartidas(ifstream& archivo, tListaPartidas& listaPartidas) {
 	return condicion;
 }
 
-//Cambiar a busqueda binaria y combinar while con buscaPos
 void insertarOrd(tListaPartidas& listaPartidas, const tPartida& partida) {
 	int i = 0;
-	bool terminar = false;
-	
-	while (i < listaPartidas.nElem && !terminar) {
-		if (partida < *listaPartidas.datos[i]) terminar = true;
-		else i++;
+
+	while (i < listaPartidas.nElem && *listaPartidas.datos[i] < partida) {
+		i++;
 	}
 	mueve(listaPartidas, i, true);
 	listaPartidas.datos[i] = new tPartida(partida);
@@ -38,20 +35,19 @@ void insertarOrd(tListaPartidas& listaPartidas, const tPartida& partida) {
 }
 
 void mueve(tListaPartidas& listaPartidas, const int i, const bool derecha) {
-	for (int j = i; j < listaPartidas.nElem - 1; j++) {
+	for (int j = i; j < listaPartidas.nElem; j++) {
 		if (derecha) listaPartidas.datos[j + 1] = listaPartidas.datos[j];
 		else listaPartidas.datos[j] = listaPartidas.datos[j + 1];
 	}
 }
 
-//Cambiar a busqueda binaria y combinar while con insertarOrd
 int buscaPos(const tListaPartidas& listaPartidas, int nivel) {
-	bool encontrado = false;
+
 	int i = 0;
-	while (!encontrado && i < listaPartidas.nElem) {
-		if (*listaPartidas.datos[i] < nivel) i++;
-		else encontrado = true;
+	while (i < listaPartidas.nElem && *listaPartidas.datos[i] < nivel) {
+		i++;
 	}
+	if (i == listaPartidas.nElem) i--;
 	return i;
 }
 
@@ -66,9 +62,8 @@ int dameNumElem(const tListaPartidas& listaPartidas) {
 void eliminarPartida(tListaPartidas& listaPartidas, const tPartida& partida) {
 	bool terminar = false;
 	int i = 0;
-	while (!terminar) {
-		if (*listaPartidas.datos[i] == partida) terminar = true;
-		else i++;
+	while (*listaPartidas.datos[i] < partida) {
+		i++;
 	}
 	destruyePartida(*listaPartidas.datos[i]);
 	mueve(listaPartidas, i, false);
@@ -82,5 +77,9 @@ void guardarListaPartidas(ofstream& archivo, const tListaPartidas& listaPartidas
 }
 
 void destruyeListaPartidas(tListaPartidas& listaPartidas) {
-	delete[] listaPartidas.datos;
+	for (int i = 0; i < listaPartidas.nElem; i++) {
+		delete[] listaPartidas.datos[i];
+		listaPartidas.datos[i] = nullptr;
+	}
+	listaPartidas.nElem = 0;
 }
