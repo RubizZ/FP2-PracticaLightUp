@@ -1,5 +1,4 @@
 #pragma once
-#define CELDA_H
 
 using namespace std;
 

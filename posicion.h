@@ -1,5 +1,5 @@
 #pragma once
-#define POSICION_H
+
 #include <fstream>
 
 using namespace std;

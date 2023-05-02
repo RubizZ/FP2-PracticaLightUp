@@ -1,5 +1,5 @@
 #pragma once
-#define REGLASJUEGO_H
+
 #include "tablero.h"
 
 typedef enum tDir { NORTE, SUR, ESTE, OESTE };

@@ -1,5 +1,4 @@
 #pragma once
-#define PARTIDA_H
 
 #include "tablero.h"
 #include "listaPosiciones.h"
