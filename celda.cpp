@@ -83,8 +83,10 @@ void ponBombilla(tCelda& c) {
 }
 char celdaToCharArchivo(const tCelda& c) {
 	char cc;
-	if (c.tipo == LIBRE) cc = '.';
-	else if (c.tipo == PARED && c.numBombillas == -1) cc = 'X';
-	else cc = char(c.numBombillas);
+	if (c.tipo == PARED) {
+		if (c.numBombillas == -1) cc = 'X';
+		else cc = char(c.numBombillas) + 48;
+	}
+	else cc = '.';
 	return cc;
 }
