@@ -10,7 +10,6 @@ using namespace std;
 
 void cargaArchivoCorrecto(tListaPartidas& listaPartidas);
 int eligeNivel(const tListaPartidas& listaPartidas);
-int corrigeNivel(const tListaPartidas& listaPartidas, int& nivel);
 void guardaEnArchivo(const tListaPartidas& listaPartidas);
 
 int main() {
@@ -22,15 +21,9 @@ int main() {
 
 	if (!juega(*dameElem(partidas, index))) {
 		eliminarPartida(partidas, *dameElem(partidas, index));
-		guardaEnArchivo(partidas);
 	}
+	guardaEnArchivo(partidas);
 	return 33;
-}
-
-int corrigeNivel(const tListaPartidas& listaPartidas, int& nivel) {
-	int index = buscaPos(listaPartidas, nivel);
-	if (index == dameNumElem(listaPartidas)) index--;
-	return index;
 }
 
 void cargaArchivoCorrecto(tListaPartidas& listaPartidas) {
@@ -61,7 +54,7 @@ int eligeNivel(const tListaPartidas& listaPartidas) {
 	cout << "Elige un nivel de dificultad\n\n-> ";
 	cin >> nivel;
 	cout << endl;
-	return corrigeNivel(listaPartidas, nivel);
+	return buscaPos(listaPartidas, nivel);
 }
 
 void guardaEnArchivo(const tListaPartidas& listaPartidas) {
