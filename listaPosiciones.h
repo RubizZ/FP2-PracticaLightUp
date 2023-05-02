@@ -1,4 +1,5 @@
 #pragma once
+#define LISTAPOSICIONES_H
 
 #include "posicion.h"
 
@@ -15,4 +16,3 @@ void insertar(tListaPosiciones& lp, const tPosicion& pos);
 int dameNumElem(const tListaPosiciones& lp);
 tPosicion dameElem(const tListaPosiciones& lp, int i);
 void guardarListaBombillas(ofstream& archivo, const tListaPosiciones& lp);
-void eliminar(tListaPosiciones& lp, const tPosicion& pos);
