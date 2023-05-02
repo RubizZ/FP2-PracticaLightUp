@@ -64,6 +64,10 @@ bool juega(tPartida& partida) {
 
 		if (!esPosQuit(x, y)) {
 			if (ejecutarPos(partida.tablero, x, y)) {
+				tPosicion pos;
+				iniciaPosicion(pos, x, y);
+				if (esBombilla(celdaEnPos(partida.tablero, x, y))) insertar(partida.listaBombillas, pos);
+				else eliminar(partida.listaBombillas, pos);
 				mostrarTablero(partida.tablero);
 			}
 			if (estaTerminado(partida.tablero)) cout << "Has terminado el juego!\n";
@@ -87,12 +91,13 @@ void ponBombillas(tPartida& partida) {
 
 void guardarPartida(ofstream& archivo, const tPartida& partida) {
 	
-	archivo << partida.nivel << endl;
-	archivo << getNumFilas(partida.tablero) << " " << getNumCols(partida.tablero)<<endl;
+	archivo << "LEVEL " << partida.nivel << endl;
+	archivo << getNumFilas(partida.tablero) << " " << getNumCols(partida.tablero) << endl;
 	
 	for (int i = 0; i < getNumFilas(partida.tablero); i++) {
 		for (int j = 0; j < getNumCols(partida.tablero); j++) {
-			char c = celdaToCharArchivo(celdaEnPos(partida.tablero, i, j));
+			tCelda cel = celdaEnPos(partida.tablero, i, j);
+			char c = celdaToCharArchivo(cel);
 			archivo << c;
 		}
 		archivo << endl;
