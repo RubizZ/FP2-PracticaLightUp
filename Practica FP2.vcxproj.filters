@@ -70,19 +70,17 @@
     <Text Include="codigoNoUsado.txt">
       <Filter>Archivos de recursos</Filter>
     </Text>
-    <Text Include="tablero.txt">
-      <Filter>Archivos de recursos</Filter>
-    </Text>
-    <Text Include="tablero2.txt">
-      <Filter>Archivos de recursos</Filter>
-    </Text>
     <Text Include="tableros.txt">
       <Filter>Archivos de recursos</Filter>
     </Text>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="solucionTablero2.png">
+    <Text Include="tableros2.txt">
       <Filter>Archivos de recursos</Filter>
-    </Image>
+    </Text>
+    <Text Include="tableros3.txt">
+      <Filter>Archivos de recursos</Filter>
+    </Text>
+    <Text Include="tableros4.txt">
+      <Filter>Archivos de recursos</Filter>
+    </Text>
   </ItemGroup>
 </Project>

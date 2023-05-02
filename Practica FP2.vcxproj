@@ -152,12 +152,10 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="codigoNoUsado.txt" />
-    <Text Include="tablero.txt" />
-    <Text Include="tablero2.txt" />
     <Text Include="tableros.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="solucionTablero2.png" />
+    <Text Include="tableros2.txt" />
+    <Text Include="tableros3.txt" />
+    <Text Include="tableros4.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
