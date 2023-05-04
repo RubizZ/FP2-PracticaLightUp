@@ -1,3 +1,16 @@
+ void eliminar(tListaPosiciones& lp, const tPosicion& pos) {
+	int i = 0;
+	while (i < lp.cont && !(lp.arrayPos[i] == pos)) {
+		i++;
+	}
+	if (i != lp.cont) {
+		for (int j = i; j < lp.cont - 1; j++) {
+			lp.arrayPos[j] = lp.arrayPos[j + 1];
+		}
+		lp.cont--;
+	}
+}
+
 void traeIzquierda(tListaPartidas& listaPartidas, const int i) {
 	for (int j = i + 1; j < listaPartidas.nElem; j++) {
 		listaPartidas.datos[j] = listaPartidas.datos[j + 1];
