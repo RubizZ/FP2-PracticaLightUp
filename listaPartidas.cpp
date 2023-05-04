@@ -60,7 +60,6 @@ int dameNumElem(const tListaPartidas& listaPartidas) {
 }
 
 void eliminarPartida(tListaPartidas& listaPartidas, const tPartida& partida) {
-	bool terminar = false;
 	int i = 0;
 	while (*listaPartidas.datos[i] < partida) {
 		i++;
@@ -78,6 +77,7 @@ void guardarListaPartidas(ofstream& archivo, const tListaPartidas& listaPartidas
 
 void destruyeListaPartidas(tListaPartidas& listaPartidas) {
 	for (int i = 0; i < listaPartidas.nElem; i++) {
+		destruyePartida(*listaPartidas.datos[i]);
 		delete[] listaPartidas.datos[i];
 		listaPartidas.datos[i] = nullptr;
 	}
