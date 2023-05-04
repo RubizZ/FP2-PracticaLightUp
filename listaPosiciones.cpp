@@ -22,18 +22,6 @@ void insertar(tListaPosiciones& lp, const tPosicion& pos) {
 	lp.arrayPos[lp.cont] = pos;
 	lp.cont++;
 }
-void eliminar(tListaPosiciones& lp, const tPosicion& pos) {
-	int i = 0;
-	while (i < lp.cont && !(lp.arrayPos[i] == pos)) {
-		i++;
-	}
-	if (i != lp.cont) {
-		for (int j = i; j < lp.cont - 1; j++) {
-			lp.arrayPos[j] = lp.arrayPos[j + 1];
-		}
-		lp.cont--;
-	}
-}
 int dameNumElem(const tListaPosiciones& lp) {
 	return lp.cont;
 }
