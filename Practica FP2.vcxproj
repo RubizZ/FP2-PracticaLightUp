@@ -154,8 +154,6 @@
     <Text Include="codigoNoUsado.txt" />
     <Text Include="tableros.txt" />
     <Text Include="tableros2.txt" />
-    <Text Include="tableros3.txt" />
-    <Text Include="tableros4.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

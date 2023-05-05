@@ -23,6 +23,7 @@ int main() {
 		eliminarPartida(partidas, *dameElem(partidas, index));
 	}
 	guardaEnArchivo(partidas);
+	destruyeListaPartidas(partidas);
 	return 33;
 }
 
